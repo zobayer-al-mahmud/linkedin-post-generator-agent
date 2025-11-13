@@ -1,5 +1,6 @@
 **Sample Video**
-[MP4 to WEBM Converter - FreeConvert.com.webm](https://github.com/user-attachments/assets/ba1bac2b-a5df-4bd4-a157-75cafd45f084)
+[linkdin post generator ai agent.webm](https://github.com/user-attachments/assets/3983b056-3869-4642-b5ec-7853088aa58d)
+
 
 
 # 🤖 LinkedIn Post Generator - AI Agent

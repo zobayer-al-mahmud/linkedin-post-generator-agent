@@ -5,7 +5,7 @@ Module 13 - AI Agent Project
 
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
 
 # Load environment variables
 load_dotenv()
@@ -29,21 +29,25 @@ class LinkedInPostAgent:
             api_key: GitHub token (optional, can use env variable)
         """
         # Get API key from parameter or environment
-        self.api_key = api_key or os.getenv("GITHUB_TOKEN")
+        token = api_key or os.getenv("GITHUB_TOKEN")
         
-        if not self.api_key:
+        if not token:
             raise ValueError(
-                "GitHub token not found. Please set GITHUB_TOKEN "
-                "in your .env file or pass it to the constructor."
+                "GITHUB_TOKEN environment variable not set. Please provide a GitHub token."
             )
         
-        # Initialize the OpenAI client with GitHub Models endpoint
-        self.client = OpenAI(
-            base_url="https://models.github.ai/inference",
-            api_key=self.api_key,
+        # Initialize ChatOpenAI with GitHub Models endpoint
+        endpoint = "https://models.github.ai/inference"
+        model_name = "openai/gpt-4o-mini"
+        
+        self.llm = ChatOpenAI(
+            model_name=model_name,
+            openai_api_key=token,
+            openai_api_base=endpoint,
+            temperature=0.5,
         )
         
-        self.model = "openai/gpt-4o-mini"
+        self.model = model_name
     
     def generate_post(self, topic: str, language: str = "English") -> str:
         """
@@ -75,23 +79,9 @@ Requirements:
 
 Generate the LinkedIn post:"""
 
-            # Call GitHub Models API
-            response = self.client.chat.completions.create(
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a professional LinkedIn content creator who writes engaging posts.",
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
-                model=self.model,
-                temperature=0.7
-            )
-            
-            return response.choices[0].message.content.strip()
+            # Invoke the LLM
+            response = self.llm.invoke(prompt)
+            return response.content.strip()
         
         except Exception as e:
             return f"Error generating post: {str(e)}"

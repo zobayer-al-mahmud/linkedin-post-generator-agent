@@ -1,6 +1,7 @@
 **Sample Video**
 
-[linkdin post generator ai agent.webm](https://github.com/user-attachments/assets/3983b056-3869-4642-b5ec-7853088aa58d)
+[Desktop 2025.11.14 - 22.31.46.01.webm](https://github.com/user-attachments/assets/332cd2ac-7ed7-49ca-b030-0c13bb0b7cf1)
+
 
 
 
